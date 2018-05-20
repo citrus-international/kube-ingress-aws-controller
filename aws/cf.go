@@ -148,7 +148,6 @@ type stackSpec struct {
 	stackTerminationProtection   bool
 	idleConnectionTimeoutSeconds uint
 	backendProtocol              string
-	healthCheck                  *healthCheck
 }
 
 type healthCheck struct {
