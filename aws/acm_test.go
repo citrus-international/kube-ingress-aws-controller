@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/acm"
 	"github.com/aws/aws-sdk-go/service/acm/acmiface"
-	"github.com/zalando-incubator/kube-ingress-aws-controller/certs"
+	"github.com/citrus-international/kube-ingress-aws-controller/certs"
 )
 
 type mockedACMClient struct {

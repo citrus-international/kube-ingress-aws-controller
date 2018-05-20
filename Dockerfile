@@ -1,18 +1,18 @@
 # builder image
-FROM golang as builder
+# FROM golang AS builder
+#
+# RUN go get github.com/Masterminds/glide
+# WORKDIR /go/src/github.com/citrus-international/kube-ingress-aws-controller
+# COPY . .
+# RUN glide install --strip-vendor
+# RUN make test
+# RUN make build.linux
+#
+# COPY --from=builder /go/src/github.com/citrus-international/kube-ingress-aws-controller/build/linux/kube-ingress-aws-controller \
+#   /bin/kube-ingress-aws-controller
 
-RUN go get github.com/Masterminds/glide
-WORKDIR /go/src/github.com/zalando-incubator/kube-ingress-aws-controller
-COPY . .
-RUN glide install --strip-vendor
-RUN make test
-RUN make build.linux
+FROM alpine
 
-# final image
-FROM registry.opensource.zalan.do/stups/alpine:latest
-MAINTAINER Team Teapot @ Zalando SE <team-teapot@zalando.de>
-
-COPY --from=builder /go/src/github.com/zalando-incubator/kube-ingress-aws-controller/build/linux/kube-ingress-aws-controller \
-  /bin/kube-ingress-aws-controller
+COPY /build/linux/kube-ingress-aws-controller /bin/kube-ingress-aws-controller
 
 ENTRYPOINT ["/bin/kube-ingress-aws-controller"]

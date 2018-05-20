@@ -15,9 +15,9 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/elbv2"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/zalando-incubator/kube-ingress-aws-controller/aws"
-	"github.com/zalando-incubator/kube-ingress-aws-controller/certs"
-	"github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes"
+	"github.com/citrus-international/kube-ingress-aws-controller/aws"
+	"github.com/citrus-international/kube-ingress-aws-controller/certs"
+	"github.com/citrus-international/kube-ingress-aws-controller/kubernetes"
 )
 
 const (
@@ -35,6 +35,7 @@ var (
 	cfCustomTemplate           string
 	creationTimeout            time.Duration
 	certPollingInterval        time.Duration
+	backendProtcol             string
 	healthCheckPath            string
 	healthCheckPort            uint
 	healthcheckInterval        time.Duration
@@ -65,6 +66,8 @@ func loadSettings() error {
 	flag.BoolVar(&stackTerminationProtection, "stack-termination-protection", false, "enables stack termination protection for the stacks managed by the controller.")
 	flag.DurationVar(&certTTL, "cert-ttl-timeout", defaultCertTTL,
 		"sets the timeout of how long a certificate is kept on an old ALB to be decommissioned.")
+	flag.StringVar(&backendProtcol, "backend-protocol", aws.DefaultBackendProtocol,
+		"sets the backend protocol (HTTP/HTTPS)")
 	flag.StringVar(&healthCheckPath, "health-check-path", aws.DefaultHealthCheckPath,
 		"sets the health check path for the created target groups")
 	flag.UintVar(&healthCheckPort, "health-check-port", aws.DefaultHealthCheckPort,
@@ -158,6 +161,7 @@ func main() {
 		log.Fatal(err)
 	}
 	awsAdapter = awsAdapter.
+		WithBackendProtocol(backendProtcol).
 		WithHealthCheckPath(healthCheckPath).
 		WithHealthCheckPort(healthCheckPort).
 		WithCreationTimeout(creationTimeout).

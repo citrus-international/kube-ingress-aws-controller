@@ -129,6 +129,7 @@ const (
 	parameterTargetGroupHealthCheckPortParameter     = "TargetGroupHealthCheckPortParameter"
 	parameterTargetGroupHealthCheckIntervalParameter = "TargetGroupHealthCheckIntervalParameter"
 	parameterTargetGroupVPCIDParameter               = "TargetGroupVPCIDParameter"
+	parameterTargetGroupProtocolParameter            = "TargetGroupProtocolParameter"
 	parameterListenerCertificatesParameter           = "ListenerCertificatesParameter"
 )
 
@@ -146,6 +147,8 @@ type stackSpec struct {
 	customTemplate               string
 	stackTerminationProtection   bool
 	idleConnectionTimeoutSeconds uint
+	backendProtocol              string
+	healthCheck                  *healthCheck
 }
 
 type healthCheck struct {
@@ -168,6 +171,7 @@ func createStack(svc cloudformationiface.CloudFormationAPI, spec *stackSpec) (st
 			cfParam(parameterLoadBalancerSecurityGroupParameter, spec.securityGroupID),
 			cfParam(parameterLoadBalancerSubnetsParameter, strings.Join(spec.subnets, ",")),
 			cfParam(parameterTargetGroupVPCIDParameter, spec.vpcID),
+			cfParam(parameterTargetGroupProtocolParameter, spec.backendProtocol),
 		},
 		Tags: []*cloudformation.Tag{
 			cfTag(kubernetesCreatorTag, kubernetesCreatorValue),
@@ -215,6 +219,7 @@ func updateStack(svc cloudformationiface.CloudFormationAPI, spec *stackSpec) (st
 			cfParam(parameterLoadBalancerSecurityGroupParameter, spec.securityGroupID),
 			cfParam(parameterLoadBalancerSubnetsParameter, strings.Join(spec.subnets, ",")),
 			cfParam(parameterTargetGroupVPCIDParameter, spec.vpcID),
+			cfParam(parameterTargetGroupProtocolParameter, spec.backendProtocol),
 		},
 		Tags: []*cloudformation.Tag{
 			cfTag(kubernetesCreatorTag, kubernetesCreatorValue),

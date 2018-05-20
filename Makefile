@@ -1,9 +1,11 @@
 .PHONY: clean check build.local build.linux build.osx build.docker build.push
 
+ECR=674466932943.dkr.ecr.ap-southeast-2.amazonaws.com
 BINARY        ?= kube-ingress-aws-controller
 VERSION       ?= $(shell git describe --tags --always --dirty)
-IMAGE         ?= registry-write.opensource.zalan.do/teapot/$(BINARY)
-TAG           ?= $(VERSION)
+IMAGE         ?= $(ECR)/$(BINARY)
+# TAG           ?= $(VERSION)
+TAG           ?= v0.6.8
 SOURCES       = $(shell find . -name '*.go')
 DOCKERFILE    ?= Dockerfile
 GOPKGS        = $(shell go list ./...)
@@ -39,11 +41,14 @@ build/linux/$(BINARY): $(SOURCES)
 build/osx/$(BINARY): $(SOURCES)
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build $(BUILD_FLAGS) -o build/osx/$(BINARY) -ldflags "$(LDFLAGS)" .
 
+
+
 build.docker:
 	docker build -t "$(IMAGE):$(TAG)" -f $(DOCKERFILE) .
 
 build.push: build.docker
-	docker push "$(IMAGE):$(TAG)"
+	$$(aws ecr get-login --no-include-email) \
+	&& docker push "$(IMAGE):$(TAG)"
 
 define TEST_CNF
 [req]

@@ -20,7 +20,7 @@
     % kubectl create -f deploy/ingress-controller.yaml
 
 If you have done this, you can use our
-[example](https://github.com/zalando-incubator/kube-ingress-aws-controller/tree/master/example)
+[example](https://github.com/citrus-international/kube-ingress-aws-controller/tree/master/example)
 to test the integration and see our [test deployment for advanced features](test-deployment.md).
 
 ## Test deployment

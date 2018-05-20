@@ -238,4 +238,4 @@ Please also note that the worker nodes will need the right permission to describ
 The decision of how to grant these roles is out of scope for this document and depends on your setup. Possible options are:
 
 - assigning an AWS IAM Instance Profile with an IAM role including all the above permissions to the nodes of the cluster
-- use a setup based on [kube2iam](https://github.com/jtblin/kube2iam) like in [Zalando's Kubernetes setup](https://github.com/zalando-incubator/kubernetes-on-aws).
+- use a setup based on [kube2iam](https://github.com/jtblin/kube2iam) like in [Zalando's Kubernetes setup](https://github.com/citrus-international/kubernetes-on-aws).

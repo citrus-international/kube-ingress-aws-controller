@@ -4,14 +4,14 @@ This is an ingress controller for [Kubernetes](http://kubernetes.io/) — the op
 scaling, and management system — on AWS. It runs inside a Kubernetes cluster to monitor changes to your ingress
 resources and orchestrate [AWS Load Balancers](https://aws.amazon.com/elasticloadbalancing/) accordingly.
 
-[![Build Status](https://travis-ci.org/zalando-incubator/kube-ingress-aws-controller.svg?branch=master)](https://travis-ci.org/zalando-incubator/kube-ingress-aws-controller)
-[![Coverage Status](https://coveralls.io/repos/github/zalando-incubator/kube-ingress-aws-controller/badge.svg?branch=master)](https://coveralls.io/github/zalando-incubator/kube-ingress-aws-controller?branch=master)
-[![GitHub release](https://img.shields.io/github/release/zalando-incubator/kube-ingress-aws-controller.svg)]()
-[![go-doc](https://godoc.org/github.com/zalando-incubator/kube-ingress-aws-controller?status.svg)](https://godoc.org/github.com/zalando-incubator/kube-ingress-aws-controller)
+[![Build Status](https://travis-ci.org/citrus-international/kube-ingress-aws-controller.svg?branch=master)](https://travis-ci.org/citrus-international/kube-ingress-aws-controller)
+[![Coverage Status](https://coveralls.io/repos/github/citrus-international/kube-ingress-aws-controller/badge.svg?branch=master)](https://coveralls.io/github/citrus-international/kube-ingress-aws-controller?branch=master)
+[![GitHub release](https://img.shields.io/github/release/citrus-international/kube-ingress-aws-controller.svg)]()
+[![go-doc](https://godoc.org/github.com/citrus-international/kube-ingress-aws-controller?status.svg)](https://godoc.org/github.com/citrus-international/kube-ingress-aws-controller)
 
 
 This ingress controller uses the EC2 instance metadata of the worker node where it's currently running to find the
-additional details about the cluster provisioned by [Kubernetes on top of AWS](https://github.com/zalando-incubator/kubernetes-on-aws).
+additional details about the cluster provisioned by [Kubernetes on top of AWS](https://github.com/citrus-international/kubernetes-on-aws).
 This information is used to manage AWS resources for each ingress objects of the cluster.
 
 ## Features
@@ -69,7 +69,7 @@ running has the clusterID tag `kubernetes.io/cluster/<cluster-id>=owned` set
 This controller is used in production since Q1 2017. It aims to be out-of-the-box useful for anyone
 running Kubernetes. Jump down to the [Quickstart](#trying-it-out) to try it out—and please let us know if you have
 trouble getting it running by filing an
-[Issue](https://github.com/zalando-incubator/kube-ingress-aws-controller/issues).
+[Issue](https://github.com/citrus-international/kube-ingress-aws-controller/issues).
 If you created your cluster with [Kops](https://github.com/kubernetes/kops), see our [deployment guide for Kops](deploy/kops.md)
 
 As of this writing, it's being used only in small production use cases at [Zalando](https://tech.zalando.com/), and
@@ -77,11 +77,11 @@ is not yet battle-tested. We're actively seeking devs/teams/companies to try it 
 make improvements.
 
 We are also eager to bring new contributors on board. See [our contributor guidelines](CONTRIBUTING.md)
-to get started, or [claim a "Help Wanted" item](https://github.com/zalando-incubator/kube-ingress-aws-controller/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+to get started, or [claim a "Help Wanted" item](https://github.com/citrus-international/kube-ingress-aws-controller/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
 
 ## Why We Created This Ingress Controller
 
-The maintainers of this project are building an infrastructure that runs [Kubernetes on top of AWS](https://github.com/zalando-incubator/kubernetes-on-aws) at large scale (for nearly 200 delivery teams), and with automation. As such, we're creating our own tooling to support this new infrastructure. We couldn't find an existing ingress controller that operates like this one does, so we created one ourselves.
+The maintainers of this project are building an infrastructure that runs [Kubernetes on top of AWS](https://github.com/citrus-international/kubernetes-on-aws) at large scale (for nearly 200 delivery teams), and with automation. As such, we're creating our own tooling to support this new infrastructure. We couldn't find an existing ingress controller that operates like this one does, so we created one ourselves.
 
 We're using this ingress controller with [Skipper](http://github.com/zalando/skipper), an HTTP router that Zalando
 has used in production since Q4 2015 as part of its front-end microservices architecture. Skipper's also open
@@ -262,7 +262,7 @@ resource anymore, it deletes all the previously created resources.
 
 ## Building
 
-This project provides a [`Makefile`](https://github.com/zalando-incubator/kube-ingress-aws-controller/blob/master/Makefile)
+This project provides a [`Makefile`](https://github.com/citrus-international/kube-ingress-aws-controller/blob/master/Makefile)
 that you can use to build either a binary or a Docker image. You have
 to have [glide installed](https://github.com/Masterminds/glide) and do
 `glide install`, before building.

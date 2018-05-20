@@ -4,10 +4,10 @@
 
 * You have a running Kubernetes Cluster on AWS
 * You have successfully
-  [deployed](https://github.com/zalando-incubator/kube-ingress-aws-controller/tree/master/deploy)
+  [deployed](https://github.com/citrus-international/kube-ingress-aws-controller/tree/master/deploy)
   the example setup with [skipper](https://github.com/zalando/skipper)
   and added all
-  [permissions](https://github.com/zalando-incubator/kube-ingress-aws-controller/tree/master/deploy/requirements.md)
+  [permissions](https://github.com/citrus-international/kube-ingress-aws-controller/tree/master/deploy/requirements.md)
   to kube-ingress-aws-incontroller.
 * You have a route53 Hosted Zone in your AWS account.
 * You have provisioned a valid ACM or IAM certificate that is valid for **my.YOUR_HOSTED_ZONE**

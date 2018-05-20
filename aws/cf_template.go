@@ -53,6 +53,11 @@ func generateTemplate(certs map[string]time.Time, idleConnectionTimeoutSeconds u
 			Description: "The healthcheck interval",
 			Default:     "10",
 		},
+		"TargetGroupProtocolParameter": &cloudformation.Parameter{
+			Type:        "String",
+			Description: "The backend protocol",
+			Default:     "HTTP",
+		},
 		"TargetGroupVPCIDParameter": &cloudformation.Parameter{
 			Type:        "AWS::EC2::VPC::Id",
 			Description: "The VPCID for the TargetGroup",
@@ -137,7 +142,7 @@ func generateTemplate(certs map[string]time.Time, idleConnectionTimeoutSeconds u
 		HealthCheckIntervalSeconds: cloudformation.Ref("TargetGroupHealthCheckIntervalParameter").Integer(),
 		HealthCheckPath:            cloudformation.Ref("TargetGroupHealthCheckPathParameter").String(),
 		Port:                       cloudformation.Ref("TargetGroupHealthCheckPortParameter").Integer(),
-		Protocol:                   cloudformation.String("HTTP"),
+		Protocol:                   cloudformation.Ref("TargetGroupProtocolParameter").String(),
 		VPCID:                      cloudformation.Ref("TargetGroupVPCIDParameter").String(),
 	})
 

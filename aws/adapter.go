@@ -25,8 +25,9 @@ import (
 	"github.com/aws/aws-sdk-go/service/elbv2/elbv2iface"
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/iam/iamiface"
+	"github.com/citrus-international/kube-ingress-aws-controller/certs"
 	"github.com/linki/instrumented_http"
-	"github.com/zalando-incubator/kube-ingress-aws-controller/certs"
+	"os"
 )
 
 // An Adapter can be used to orchestrate and obtain information from Amazon Web Services.
@@ -41,6 +42,7 @@ type Adapter struct {
 
 	customTemplate             string
 	manifest                   *manifest
+	backendProtocol            string
 	healthCheckPath            string
 	healthCheckPort            uint
 	healthCheckInterval        time.Duration
@@ -64,6 +66,7 @@ type manifest struct {
 type configProviderFunc func() client.ConfigProvider
 
 const (
+	DefaultBackendProtocol           = "HTTP"
 	DefaultHealthCheckPath           = "/kube-system/healthz"
 	DefaultHealthCheckPort           = 9999
 	DefaultHealthCheckInterval       = 10 * time.Second
@@ -124,6 +127,7 @@ func NewAdapter() (adapter *Adapter, err error) {
 		acm:                 acm.New(p),
 		iam:                 iam.New(p),
 		cloudformation:      cloudformation.New(p),
+		backendProtocol:     DefaultBackendProtocol,
 		healthCheckPath:     DefaultHealthCheckPath,
 		healthCheckPort:     DefaultHealthCheckPort,
 		healthCheckInterval: DefaultHealthCheckInterval,
@@ -149,6 +153,13 @@ func (a *Adapter) NewACMCertificateProvider() certs.CertificatesProvider {
 
 func (a *Adapter) NewIAMCertificateProvider() certs.CertificatesProvider {
 	return newIAMCertProvider(a.iam)
+}
+
+// WithBackendProtocol returns the receiver adapter after changing the backend
+// protocol that will be used by the target groups created by the adapter.
+func (a *Adapter) WithBackendProtocol(protocol string) *Adapter {
+	a.backendProtocol = protocol
+	return a
 }
 
 // WithHealthCheckPath returns the receiver adapter after changing the health check path that will be used by
@@ -348,6 +359,7 @@ func (a *Adapter) CreateStack(certificateARNs []string, scheme, owner string) (s
 		subnets:         a.FindLBSubnets(scheme),
 		vpcID:           a.VpcID(),
 		clusterID:       a.ClusterID(),
+		backendProtocol: a.backendProtocol,
 		healthCheck: &healthCheck{
 			path:     a.healthCheckPath,
 			port:     a.healthCheckPort,

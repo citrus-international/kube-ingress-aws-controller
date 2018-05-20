@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/iam/iamiface"
-	"github.com/zalando-incubator/kube-ingress-aws-controller/certs"
+	"github.com/citrus-international/kube-ingress-aws-controller/certs"
 )
 
 type mockedIAMClient struct {

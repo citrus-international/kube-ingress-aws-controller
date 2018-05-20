@@ -1,6 +1,6 @@
 # Deployment guide using Kops and Skipper (http router)
 
-[Kube AWS Ingress Controller](https://github.com/zalando-incubator/kubernetes-on-aws)
+[Kube AWS Ingress Controller](https://github.com/citrus-international/kubernetes-on-aws)
 creates AWS Application Load Balancer (ALB) that is used to terminate TLS connections and use
 [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) or
 [AWS Identity and Access Management (IAM)](http://docs.aws.amazon.com/IAM/latest/APIReference/Welcome.html)
